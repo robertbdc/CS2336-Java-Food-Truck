@@ -3,16 +3,18 @@ package restauranttester;
 import java.util.Scanner;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
-public class Restaurant
+public class Restaurant extends Menu
 {    
     Restaurant()
-    {   
+    {
+         //Creates ArrayList of Server Objects      
+    }
+    
+    public void createMenu()
+    {
         //Creates the object of Menu
         Menu menu = new Menu();
-      
-        //Creates ArrayList of Server Objects
         
         //Reads file and sends the code, name and price to setMenuItem()
         String code, name;
@@ -30,24 +32,23 @@ public class Restaurant
                 code = sc.next();
                 name = sc.next();
                 price = sc.nextDouble();               
-                menu.setMenuItem(code, name, price);              
+                MenuItem food = new MenuItem(code, name, price);
+                menuList.add(food);
             }
         }
         catch(Exception ex)
         {
             System.out.print(ex.getCause());
-        } 
-        
-    }
-    
-    public void createMenu()
-    {
-        //Creates the objects of MenuItems and adds those to the menu    
+        }       
     }
     
     public void displayMenu()
     {
-
+        //fix this output
+        for(int i = 0; i < menuList.size(); i++)
+        {
+            System.out.print(menuList.get(i).getItemName());    
+        }
     }
     
     public void displayServerList()
