@@ -6,9 +6,12 @@ public class RestaurantTester
 {
     public static void main(String[] args) 
     {
+        //Restaurant initialization stuff, makes Menu - an ArrayList of MenuItem
         Restaurant r1 = new Restaurant();
-        Scanner sc = new Scanner(System.in);
+        r1.createMenu();
         
+        //Stuff for our switch
+        Scanner sc = new Scanner(System.in);
         int x;
         boolean flag = true;
         
@@ -23,12 +26,11 @@ public class RestaurantTester
             switch(x)
             {
                 case 1:
+                    r1.displayMenu();
                     break;
                 case 2:
-                
                     break;
                 case 3:
-                   
                     break;
                 case 4: 
                     flag = false;
