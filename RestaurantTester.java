@@ -38,12 +38,9 @@ public class RestaurantTester
                 default:
                     System.out.print("Invalid entry");
             }
-            
-
         }
         while(flag);
         
-        System.out.println("\nThank you!");
-       
+        System.out.println("\nThank you!");       
     }    
 }
