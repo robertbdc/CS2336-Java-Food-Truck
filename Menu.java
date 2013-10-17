@@ -1,11 +1,8 @@
 package restauranttester;
 
-import java.util.ArrayList;
-
 public class Menu
 {   
-    public ArrayList<MenuItem> menuList = new ArrayList<>();
-    
+    //Poor, unused, forgotten class.
     public Menu()
     {
         
@@ -13,7 +10,7 @@ public class Menu
 
     public void setMenuItem(String code, String name, double price)
     {      
-        //menuList.add(new MenuItem(code, name, price));
+
     }
 
     @Override
