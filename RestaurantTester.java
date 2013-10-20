@@ -1,15 +1,13 @@
-package restauranttester;
-
 import java.util.Scanner;
 
-public class RestaurantTester
+public class RestaurantProject 
 {
     public static void main(String[] args) 
     {
         //Restaurant initialization stuff, makes Menu - an ArrayList of MenuItem
         Restaurant r1 = new Restaurant();
         r1.createMenu();
-        
+     
         //Stuff for our switch
         Scanner sc = new Scanner(System.in);
         int x;
@@ -42,5 +40,5 @@ public class RestaurantTester
         while(flag);
         
         System.out.println("\nThank you!");       
-    }    
+    }
 }
