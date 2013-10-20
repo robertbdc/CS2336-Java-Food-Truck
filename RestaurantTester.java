@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class RestaurantProject 
+public class RestaurantTester
 {
     public static void main(String[] args) 
     {

@@ -16,7 +16,7 @@ public class Menu
     public void createMenu()
     {
         //Reads file and sends the code, name and price to setMenuItem()        
-        String FILE_NAME = "C:\\Users\\Neil\\Documents\\CS2336-501\\Menu.txt";
+        String FILE_NAME = System.getProperty("user.home") + "\\CS2336-501\\Menu.txt";
         Path path = Paths.get(FILE_NAME);
         
         String code, name;
@@ -37,7 +37,7 @@ public class Menu
         }
         catch(Exception ex)
         {
-            System.out.print(ex.getCause());
+            System.out.print(ex.toString());
         }        
     }
        

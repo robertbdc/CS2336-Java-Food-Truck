@@ -1,5 +1,3 @@
-package restauranttester;
-
 public class MenuItem
 {
     private String itemCode;
