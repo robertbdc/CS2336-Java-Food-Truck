@@ -1,7 +1,4 @@
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu 
 {
@@ -13,32 +10,10 @@ public class Menu
     
     }
     
-    public void createMenu()
-    {
-        //Reads file and sends the code, name and price to setMenuItem()        
-        String FILE_NAME = System.getProperty("user.home") + "\\CS2336-501\\Menu.txt";
-        Path path = Paths.get(FILE_NAME);
-        
-        String code, name;
-        double price;
-        
-        try
-        {
-            Scanner sc = new Scanner(path);
-            
-            while(sc.hasNextLine())
-            {
-                code = sc.next();
-                name = sc.next();
-                price = sc.nextDouble();               
-                MenuItem food = new MenuItem(code, name, price);
-                menuList.add(food);
-            }
-        }
-        catch(Exception ex)
-        {
-            System.out.print(ex.toString());
-        }        
+    public void createMenuItem(String code, String name, double price)
+    {    
+        MenuItem food = new MenuItem(code, name, price);
+        menuList.add(food);
     }
        
     public void displayMenu()
