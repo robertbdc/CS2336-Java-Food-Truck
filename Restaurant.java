@@ -1,4 +1,3 @@
-package restauranttester;
 
 import java.io.IOException;
 import java.util.Scanner;
