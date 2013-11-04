@@ -6,7 +6,6 @@ public class RestaurantTester
     {
         //Restaurant initialization stuff, makes Menu - an ArrayList of MenuItem
         Restaurant r1 = new Restaurant();
-        r1.createMenu();
      
         //Stuff for our switch
         Scanner sc = new Scanner(System.in);
@@ -27,6 +26,7 @@ public class RestaurantTester
                     r1.displayMenu();
                     break;
                 case 2:
+                    r1.displayServerList();
                     break;
                 case 3:
                     break;
