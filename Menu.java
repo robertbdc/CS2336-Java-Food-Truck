@@ -26,4 +26,17 @@ public class Menu
             System.out.printf("\n %2s %25s \t %4.2f", menuList.get(i).getItemCode(), menuList.get(i).getItemName(), menuList.get(i).getItemPrice());
         }
     }
+    
+    public MenuItem getMenuItem(String code)
+    {
+        MenuItem holder = new MenuItem();
+        
+        for(int i = 0; i < menuList.size(); i++)
+        {
+            if(code.equals(menuList.get(i).getItemCode()))
+                holder = menuList.get(i);
+        }
+        
+        return holder;      
+    }
 }
