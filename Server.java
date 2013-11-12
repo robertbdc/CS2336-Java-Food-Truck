@@ -1,28 +1,40 @@
-import java.util.ArrayList;
-
-public class Server 
+public class Check extends Activity
 {
-    private String name;
-    private static ArrayList<Table> tables = new ArrayList<>();
+    private double totalCheck;
     
-    public Server(String name, int [] table)
+    public Check(String label)
     {
-        this.name = name;
+        super.setName("Check");
+        super.setTable(label);
     }
     
-    public void setName(String name)
+    public void setTotalCheck(MenuItem mi)
     {
-        this.name = name;
+        totalCheck += mi.getItemPrice();
     }
     
-    public String getName()
+    @Override
+    public String toString()
     {
-        return name;
+        return "\nTable " + super.getTable() + " is checking out with a total of $" + totalCheck + ".";
     }
     
-    public String getStatus()
+    @Override
+    public double processActivity()
     {
-        return " ";
+        return 1.0;
     }
-
+    
+    @Override
+    public String getMessage(char ch)
+    {
+        String message;
+        
+        if(ch == 'A')
+            message = "Thank you for eating with us! \nTable " + super.getTable() + " status has now been changed to: Available";
+        else
+            message = "Not a valid status";
+        
+        return message;
+    }
 }
