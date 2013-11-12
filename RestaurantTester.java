@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class RestaurantTester
+public class RestaurantProject //you might need to change this class name
 {
     public static void main(String[] args) 
     {
@@ -20,6 +20,8 @@ public class RestaurantTester
        
             x = sc.nextInt();
 
+            try
+            {
             switch(x)
             {
                 case 1:
@@ -29,12 +31,36 @@ public class RestaurantTester
                     r1.displayServerList();
                     break;
                 case 3:
+                    do
+                    {
+                        System.out.print("\n\n1.Restaurant activity\n2.Quit"
+                                + "\n\nEnter Choice :");
+                        x = sc.nextInt();
+                        
+                        switch(x)
+                        {
+                            case 1:
+                                sc.nextLine();
+                                r1.restaurantActivity();
+                                break;
+                            case 2:
+                                break;
+                            default:
+                                System.out.print("Invalid Entry");
+                        }
+                    }
+                    while(x != 2);
                     break;
                 case 4: 
                     flag = false;
                     break;
                 default:
                     System.out.print("Invalid entry");
+            }
+            }
+            catch(Exception ex) //This doesn't work yet
+            {
+                System.out.println("Caught message " + ex.getMessage());
             }
         }
         while(flag);
