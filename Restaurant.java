@@ -14,6 +14,16 @@ public class Restaurant
         
         //Reads file and sends the code, name and price to setMenuItem()        
         String FILE_NAME = "D:\\My Documents\\Menu.txt";
+        if (!(new File(FILE_NAME).isFile())) {
+            // Default doesn't exist, but we need to get a file from somewhere!
+            PickFile thisFile = new PickFile();
+            FILE_NAME = thisFile.getFullFileName();
+            if (FILE_NAME.equals("")) {
+               System.out.println("Menu file was not selected.");
+               System.exit(0); // curl up and die
+            }
+         }   
+
         Path path = Paths.get(FILE_NAME);
         
         String code, name;
@@ -38,6 +48,15 @@ public class Restaurant
         
         //Read in server file 
         FILE_NAME = "D:\\My Documents\\Servers.txt";
+        if (!(new File(FILE_NAME).isFile())) {
+            // Default doesn't exist, but we need to get a file from somewhere!
+            PickFile thisFile = new PickFile();
+            FILE_NAME = thisFile.getFullFileName();
+            if (FILE_NAME.equals("")) {
+               System.out.println("Servers file was not selected.");
+               System.exit(0); // curl up and die
+            }
+         }   
         path = Paths.get(FILE_NAME);
         
         String serverName, temp;
