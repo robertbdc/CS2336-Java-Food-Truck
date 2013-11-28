@@ -11,16 +11,16 @@ public class Server
         
     }
     
-    public Server(String name, int [] tableArray)
+    public Server(String name, ArrayList<Integer> tableArray)
     {
         this.name = name;
-        tableList = new Table [tableArray.length];
+        tableList = new Table [tableArray.size()];
         
         String tableString;
         
-        for(int i = 0; i < tableArray.length; i++)
+        for(int i = 0; i < tableArray.size(); i++)
         {          
-            tableString = "T" + tableArray[i];
+            tableString = "T" + tableArray.get(i);
             Table t = new Table(tableString);
             tableList[i] = t;
             tables.add(t);

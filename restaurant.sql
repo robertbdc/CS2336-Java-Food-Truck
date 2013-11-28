@@ -29,19 +29,19 @@ USE `restaurant`;
 --
 
 CREATE TABLE IF NOT EXISTS `menu` (
-  `SeqNo` int(11) NOT NULL AUTO_INCREMENT,
+  `MenuSeqNo` int(11) NOT NULL AUTO_INCREMENT,
   `Category` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
   `ItemNo` int(11) NOT NULL,
   `ItemName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `Price` double NOT NULL,
-  PRIMARY KEY (`SeqNo`)
+  PRIMARY KEY (`MenuSeqNo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`SeqNo`, `Category`, `ItemNo`, `ItemName`, `Price`) VALUES
+INSERT INTO `menu` (`MenuSeqNo`, `Category`, `ItemNo`, `ItemName`, `Price`) VALUES
 (1, 'A', 1, 'Bruschetta', 5.29),
 (2, 'A', 2, 'Cabrese Flatbread', 6.1),
 (3, 'A', 3, 'Artichoke-Spinach Dip', 3.99),
@@ -66,17 +66,17 @@ INSERT INTO `menu` (`SeqNo`, `Category`, `ItemNo`, `ItemName`, `Price`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tablelist` (
-  `SeqNo` int(11) NOT NULL AUTO_INCREMENT,
+  `TableSeqNo` int(11) NOT NULL AUTO_INCREMENT,
   `TableNo` int(11) NOT NULL,
-  `WaiterNo` int(11) NOT NULL,
-  PRIMARY KEY (`SeqNo`)
+  `WaiterSeqNo` int(11) NOT NULL,
+  PRIMARY KEY (`TableSeqNo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `tablelist`
 --
 
-INSERT INTO `tablelist` (`SeqNo`, `TableNo`, `WaiterNo`) VALUES
+INSERT INTO `tablelist` (`TableSeqNo`, `TableNo`, `WaiterSeqNo`) VALUES
 (1, 1, 1),
 (2, 2, 1),
 (3, 5, 1),
@@ -103,16 +103,16 @@ INSERT INTO `tablelist` (`SeqNo`, `TableNo`, `WaiterNo`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `waiter` (
-  `SeqNo` int(11) NOT NULL AUTO_INCREMENT,
+  `WaiterSeqNo` int(11) NOT NULL AUTO_INCREMENT,
   `WaiterName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`SeqNo`)
+  PRIMARY KEY (`WaiterSeqNo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `waiter`
 --
 
-INSERT INTO `waiter` (`SeqNo`, `WaiterName`) VALUES
+INSERT INTO `waiter` (`WaiterSeqNo`, `WaiterName`) VALUES
 (1, 'Nancy Jean'),
 (2, 'Bubba Lee'),
 (3, 'Jim Bob'),

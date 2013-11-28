@@ -3,6 +3,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.io.*;
+import java.sql.*;
 
 public class Restaurant
 {
@@ -12,88 +13,95 @@ public class Restaurant
     {
         Menu m1 = new Menu();
         
-        //Reads file and sends the code, name and price to setMenuItem()        
-        String FILE_NAME = "D:\\My Documents\\Menu.txt";
-        if (!(new File(FILE_NAME).isFile())) {
-            // Default doesn't exist, but we need to get a file from somewhere!
-            PickFile thisFile = new PickFile();
-            FILE_NAME = thisFile.getFullFileName();
-            if (FILE_NAME.equals("")) {
-               System.out.println("Menu file was not selected.");
-               System.exit(0); // curl up and die
-            }
-         }   
+        // Replace file-parsing with database retrieval
+        // (though a redesign would probably have db activity happen in individual modules)        
+        try {
+          Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+          throw new RuntimeException("Can't load database driver. Must add to the classpath.", e);
+        }
 
-        Path path = Paths.get(FILE_NAME);
-        
-        String code, name;
-        double price;
-        
-        try
-        {
-            Scanner sc = new Scanner(path);
+        String url = "jdbc:mysql://localhost:3306/restaurant";
+        String username = "root";
+        String password = "";
+        Connection connection = null;
+        try {
+          connection = DriverManager.getConnection(url, username, password);
+          System.out.println("Database connected!");
+          
+          // Load the menu file
+          Statement stmt = connection.createStatement();
+          String sql = "SELECT Category, ItemNo, ItemName, Price from menu";
+          ResultSet rs = stmt.executeQuery(sql);
+         
+          // ResultSet is initially before the first data set
+          while (rs.next()) {
+            // Future: separate Category and ItemNo.
+            String code = rs.getString("Category") + rs.getString("ItemNo");
+            String name = rs.getString("ItemName");
+            Double price = rs.getDouble("Price");
             
-            while(sc.hasNextLine())
-            {
-                code = sc.next();
-                name = sc.next().replace("_", " ");
-                price = sc.nextDouble();               
-                m1.createMenuItem(code, name, price);
-            }
-        }
-        catch(Exception ex)
-        {
-            System.out.print(ex.getCause());
-        } 
-        
-        //Read in server file 
-        FILE_NAME = "D:\\My Documents\\Servers.txt";
-        if (!(new File(FILE_NAME).isFile())) {
-            // Default doesn't exist, but we need to get a file from somewhere!
-            PickFile thisFile = new PickFile();
-            FILE_NAME = thisFile.getFullFileName();
-            if (FILE_NAME.equals("")) {
-               System.out.println("Servers file was not selected.");
-               System.exit(0); // curl up and die
-            }
-         }   
-        path = Paths.get(FILE_NAME);
-        
-        String serverName, temp;
-        int [] tables;
-        
-        try
-        {
-            Scanner sc = new Scanner(path).useDelimiter(" ");
-            
-            while(sc.hasNextLine())
-            {
-                //Get the name from the file, then stop
+            m1.createMenuItem(code, name, price);
+          }   
+         
+          System.out.println("Close resultset and statement");
+          rs.close();
+          stmt.close();
+          
+          // Load the server file
+          // Have to pass Name and Tables[] to Server constructor
+          // For each Name, get Tables. Then construct Server.
+          stmt = connection.createStatement();
+          sql = "Select WaiterName, WaiterSeqNo from waiter";
+          rs = stmt.executeQuery(sql);
 
-                temp = sc.next();
-                serverName = temp;
-                
-                //Read in and format our lines
-                temp = sc.nextLine().replace(" ", "");
-                temp = temp.replace((","), " ");
-                String [] parsed = temp.split(" ");
-      
-                tables = new int [parsed.length];
-                
-                //take formatted lines and make them into arrays
-                for(int i = 0; i < parsed.length; i++)
-                {                    
-                    tables[i] = Integer.parseInt(parsed[i]);
-                }               
-                Server s1 = new Server(serverName, tables);
-                servers.add(s1);
+          // Java doc: "only one ResultSet object per Statement object can be open at the same time"
+          // So create an object for our table lists
+          Statement stmtTable;
+          ResultSet rsTable;
+         
+          // ResultSet is initially before the first data set
+          while (rs.next()) {
+            String serverName = rs.getString("WaiterName");
+            int serverNo = rs.getInt("WaiterSeqNo");
+            
+            // Have server, get array of tables
+            // Note, we want the Table No (physical table), not the Table SeqNo
+            sql = String.format("Select TableNo from tablelist where WaiterSeqNo = %d", serverNo);
+            stmtTable = connection.createStatement();
+            rsTable = stmtTable.executeQuery(sql);
+            
+            // Standard recordset doesn't give us a record count,
+            // so we'll have to use an arrayList
+            ArrayList<Integer> tables = new ArrayList<>();
+            
+            while (rsTable.next()) {
+               tables.add(rsTable.getInt("TableNo"));
             }
+            rsTable.close();
+            stmtTable.close();
+            
+            // Have server and table list
+            Server s1 = new Server(serverName, tables);
+            servers.add(s1);
+          }   
+         
+          System.out.println("Close resultset and statement");
+          rs.close();
+          stmt.close();
+        } catch (SQLException e) {
+          throw new RuntimeException("Can't read from database.", e);
+        } finally {
+          // Always want to close the connection!
+          if (connection != null) {
+            try {
+               connection.close();
+            } catch (SQLException ignore) {}
+          }   
         }
-        catch(IOException | NumberFormatException ex)
-        {
-            System.out.print(ex.getCause());
-        }
-    } 
+        
+        
+    } // End Restaurant constructor 
     
     public void displayMenu()
     {
@@ -191,6 +199,6 @@ public class Restaurant
                 
             }
         }
-    }  
-}
+    }  // End ProcessActivity
 
+} // End class Restaurant
