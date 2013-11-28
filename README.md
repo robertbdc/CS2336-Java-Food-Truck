@@ -15,9 +15,7 @@ Java project for Comp Sci II class
 
 1. Install WampServer from www.wampserver.com
 
-2. Run WampServer. It will ask about making changes to the computer, then will put an icon in the systray.
-
-* Note: when done, you can turn off Wampserver from the systray icon. Run it again to start up the server
+2. Run WampServer. It will ask about making changes to the computer, then will put an icon in the systray. (Note: when done, you can turn off Wampserver from the systray icon. Run it again to start up the server)
 
 3. Open a browser and point to http://localhost/phpmyadmin/
 
