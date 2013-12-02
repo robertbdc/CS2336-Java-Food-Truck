@@ -8,10 +8,11 @@ import java.sql.*;
 public class Restaurant
 {
 	private static ArrayList<Server> servers = new ArrayList<>();
+   private static Menu theMenu;
 	
 	public Restaurant()
 	{
-		Menu m1 = new Menu();
+		theMenu = new Menu();
 		
 		// Replace file-parsing with database retrieval
 		// (though a redesign would probably have db activity happen in individual modules)		
@@ -41,7 +42,7 @@ public class Restaurant
 				String name = rs.getString("ItemName");
 				Double price = rs.getDouble("Price");
 				
-				m1.createMenuItem(code, name, price);
+				theMenu.createMenuItem(code, name, price);
 			}   
 		 
 			rs.close();
@@ -99,10 +100,14 @@ public class Restaurant
 		}
 	} // End Restaurant constructor 
 	
+   public static Menu getMenu()
+   {
+      return theMenu;
+   }
+   
 	public void displayMenu()
 	{
-		Menu m2 =  new Menu();
-		m2.displayMenu();
+      System.out.println(theMenu.toString());
 	}
 	
 	public void displayServerList()

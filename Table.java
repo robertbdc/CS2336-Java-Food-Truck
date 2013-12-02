@@ -8,11 +8,15 @@ public class Table
 	}
    
 	// Keep a list of pointers to Table objects that are created
+   // Used by static function findTable.
 	private static ArrayList<Table> tableList = new ArrayList<>();
 	
 	private Status curStatus = Status.EMPTY;
 	private int tableNo = -1;
 	private int numGuests = 0;
+   
+   // A Table has an Order for each guest
+   private ArrayList<Order> tableOrders = new ArrayList<>();;
 	
 	public Table(int num)
 	{
@@ -37,16 +41,6 @@ public class Table
 		return retVal;
 	}
 	
-	public String toString() {
-		String retVal;
-		retVal = "Table " + tableNo + " status: " + this.getStatus();
-		if (this.curStatus != Status.EMPTY) {
-			retVal += " (" + this.numGuests + " guests)";
-		}
-		return retVal;
-	}
-	
-
 	public void Arrives() {
 		// Need to find out how many have arrived. If we get a number, set status
 		int guests;
@@ -71,8 +65,20 @@ public class Table
 	}
 	
 	public void Orders() {
-		// todo: Get menu items
-		
+      // Order for the number of guests
+      tableOrders.clear();
+      for (int i = 0; i < this.numGuests; i++) {
+         // Order class will take care of populating itself.
+         // Just need to give it the guest position.
+         tableOrders.add(new Order(i));
+         if (tableOrders.get(i).cancelled()) {
+            // Cancelled ordering food
+            // Don't update status
+            System.out.println("The order has been cancelled.");
+            return;
+         }
+      }
+      
 		// Got it, let's send the order to the kitchen
 		System.out.println("The order has been sent to the kitchen.");
 		this.curStatus = Status.ORDERED;
@@ -106,7 +112,8 @@ public class Table
 	}
 	
 	public boolean canCheck() {
-		return (this.curStatus == Status.SERVED);
+		// They can also get the check (ie leave) if they haven't ordered
+      return ((this.curStatus == Status.SERVED) || (this.curStatus == Status.SEATED));
 	}
 
 	public String getStatus()
@@ -128,4 +135,14 @@ public class Table
 		}
 		return retVal;
 	}
+   
+	public String toString() {
+		String retVal;
+		retVal = "Table " + tableNo + " status: " + this.getStatus();
+		if (this.curStatus != Status.EMPTY) {
+			retVal += " (" + this.numGuests + " guests)";
+		}
+		return retVal;
+	}
+	
 }

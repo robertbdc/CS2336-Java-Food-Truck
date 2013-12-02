@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Menu 
 {
-    private static ArrayList<MenuItem> menuList = new ArrayList<>();
+    private ArrayList<MenuItem> menuList = new ArrayList<>();
     
     //Constructor
     Menu()
@@ -16,27 +16,17 @@ public class Menu
         menuList.add(food);
     }
        
-    public void displayMenu()
+    public String toString()
     {
-        System.out.println("Code \t\t Name \t\t Price");
+        String outString = "Code \t\t Name \t\t Price\n";
         
         //Prints menu
         for(int i = 0; i < menuList.size(); i++)
         {
-            System.out.printf("\n %2s %25s \t %4.2f", menuList.get(i).getItemCode(), menuList.get(i).getItemName(), menuList.get(i).getItemPrice());
+            outString += menuList.get(i).toString();
+            outString += "\n";
         }
+        return outString;
     }
     
-    public MenuItem getMenuItem(String code)
-    {
-        MenuItem holder = new MenuItem();
-        
-        for(int i = 0; i < menuList.size(); i++)
-        {
-            if(code.equals(menuList.get(i).getItemCode()))
-                holder = menuList.get(i);
-        }
-        
-        return holder;      
-    }
 }
