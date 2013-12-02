@@ -119,6 +119,31 @@ public class Restaurant
 		 System.out.println(servers.get(i).getServerStatus());		 
 		}
 	}
+   
+   public Table askForTable()
+   {
+		Scanner sc = new Scanner(System.in);
+      int tableNo;
+      Table curTable;
+
+		// Repeat until we get a valid table number (or cancel)
+		do {
+			System.out.print("Enter table number (blank=cancel): ");
+			String tableStr = sc.nextLine();
+			
+			if (tableStr.equals("")) return null;
+			
+			tableNo = RestaurantProject.tryParseInt(tableStr, -1);
+			
+			// See if this is a good table
+			curTable = Table.findTable(tableNo);
+			if (curTable == null) {
+				System.out.println("\nInvalid table number.");
+			}
+		} while (curTable == null);
+		
+      return curTable;
+   }
 	
 	// Note: this combines original restaurantActivity and processActivity
 	// because processActivity was only called by restaurantActivity and was thus redundant.
@@ -130,25 +155,11 @@ public class Restaurant
 			int tableNo;
 			char serviceCode;
 			boolean isOK;
-			Table curTable;
+
+         Table curTable = this.askForTable();
+         if (curTable == null) return; // user cancelled
 			
-			// Repeat until we get a valid table number (or cancel)
-			do {
-				System.out.print("Enter table number (blank=cancel): ");
-				String tableStr = sc.nextLine();
-				
-				if (tableStr.equals("")) return;
-				
-				tableNo = RestaurantProject.tryParseInt(tableStr, -1);
-				
-				// See if this is a good table
-				curTable = Table.findTable(tableNo);
-				if (curTable == null) {
-					System.out.println("\nInvalid table number.");
-				}
-			} while (curTable == null);
-			
-			// Display the status of this table?
+			// Display the status of this table
 			System.out.println(curTable.toString());
 			
 			// What are the valid actions for this table?

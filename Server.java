@@ -2,6 +2,10 @@ import java.util.ArrayList;
 
 public class Server
 {
+	// Keep a list of pointers to Server objects that are created
+   // Used by static function getServerFromTable.
+	private static ArrayList<Server> serverList = new ArrayList<>();
+
 	private String name;
 	private Table tableList [];
 	private static ArrayList<Table> tables = new ArrayList<>();
@@ -19,8 +23,35 @@ public class Server
 			tableList[i] = t;
 			tables.add(t);
 		}
+      
+      serverList.add(this);
 	}
-
+   
+   public static Server getServerFromTable(Table theTable) {
+		Server retVal = null;
+		for(int i = 0; i < serverList.size(); i++)
+		{
+			if (serverList.get(i).hasTable(theTable)) {
+				retVal = serverList.get(i);
+				break;
+			}
+		}
+		return retVal;
+   }
+   
+   public boolean hasTable(Table theTable) {
+      // Does this Server work this Table?
+		for(int i = 0; i < tableList.length; i++)
+		{
+			// Future: implement Comparable and define comparator in Table class
+         if (tableList[i].getTableNo() == theTable.getTableNo()) {
+            // found it!
+            return true;
+         }
+		}
+      // Not found
+      return false;
+   }
 
 	public void setName(String name)
 	{

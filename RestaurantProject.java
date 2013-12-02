@@ -15,10 +15,15 @@ public class RestaurantProject
 		do
 		{
 			System.out.println("\n\n\tWelcome to the Java Restaurant!");
-			System.out.print("\n1.Display Menu \n2.Display Server List "
-				+ "\n3.Restaurant Activity \n4.Quit \n\nEnter Choice:");
-	   
-			x = sc.nextInt();
+			System.out.println("\n1.Display Menu");
+         System.out.println("2.Display Server List");
+         System.out.println("3.Display Table Detail");
+			System.out.println("4.Restaurant Activity");
+         System.out.println("5.Quit");
+         System.out.println("\nEnter Choice:");
+
+			String tmpStr = sc.nextLine();
+			x = RestaurantProject.tryParseInt(tmpStr, -1);
 
 			try
 			{
@@ -31,9 +36,16 @@ public class RestaurantProject
 						r1.displayServerList();
 						break;
 					case 3:
-					r1.restaurantActivity();
-					break;
-					case 4: 
+                  Table curTable = r1.askForTable();
+                  if (curTable != null) {
+                     // Display the status of this table
+               		System.out.println(curTable.toString());
+                  }      
+                  break;
+               case 4:
+					   r1.restaurantActivity();
+					   break;
+					case 5: 
 						flag = false;
 						break;
 					default:

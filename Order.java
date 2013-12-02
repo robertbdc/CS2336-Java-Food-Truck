@@ -17,7 +17,7 @@ public class Order
         this.mySeat = seat;
         
         System.out.println("Enter one or more menu items, separated by spaces.");
-        System.out.println("Example: A1 E3 D5 B2");
+        System.out.println("Example: A5 E3 D2 S2");
         System.out.println("Or enter M for Menu, or blank when done (or guest orders nothing)");
         System.out.println("Enter C to cancel the *entire* table's order.");
         
@@ -68,20 +68,32 @@ public class Order
       return didCancel;
     }
     
+    public double getOrderTotal() {
+      double total = 0.00;
+      for (int i = 0; i < orderedItems.size(); i++)
+      {
+         total += orderedItems.get(i).getItemPrice();
+      }
+      return total;
+    }
+    
     public String toString()
     {
         String outString;
         
         if (orderedItems.size() == 0)
         {
-           outString = "No current order for guest " + (this.mySeat + 1) + ":\n";
+           outString = "No current order for guest " + (this.mySeat + 1) + "\n";
         } else {
+            double total = 0.00;
            outString = "Current order for guest " + (this.mySeat + 1) + ":\n";
            for (int i = 0; i < orderedItems.size(); i++)
            {
             outString += orderedItems.get(i).toString();
             outString += "\n";
+            total += orderedItems.get(i).getItemPrice();
            }
+           outString += String.format("Guest total: $%4.2f\n", total);
         }
         return outString;
     }

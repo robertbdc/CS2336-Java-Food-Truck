@@ -142,6 +142,18 @@ public class Table
 		if (this.curStatus != Status.EMPTY) {
 			retVal += " (" + this.numGuests + " guests)";
 		}
+      retVal += "\nYour server is: ";
+      retVal += Server.getServerFromTable(this).getName();
+      if (this.curStatus == Status.ORDERED || this.curStatus == Status.SERVED) {
+         double total = 0.00;
+         retVal += "\n";
+         for (int i = 0; i < this.tableOrders.size(); i++) {
+            Order anOrder = this.tableOrders.get(i);
+            retVal += "\n" + anOrder.toString();
+            total += anOrder.getOrderTotal();
+         }
+         retVal += String.format("\nTable total: $%4.2f\n", total);
+      }
 		return retVal;
 	}
 	
